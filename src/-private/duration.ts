@@ -14,7 +14,7 @@ export interface Duration<Unit extends number> {
 
 export class DurationObject<T extends number> implements Duration<T> {
   constructor(public unit: T, public count: number) { }
-  valueOf() { return this.count * this.unit; }
+  valueOf() { return Duration.valueOf(this); }
   toString() { return Duration.toString(this); }
 }
 
@@ -34,7 +34,7 @@ export namespace Duration {
   export function assign(dest: Minutes, source: Minutes | Hours): Minutes;
   export function assign(dest: Hours, source: Hours): Hours;
   export function assign<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count = (source.count * source.unit) * dest.unit;
+    dest.count = Math.round((source.count * source.unit) * dest.unit);
     return dest;
   }
 
@@ -45,7 +45,7 @@ export namespace Duration {
   export function add(dest: Minutes, source: Minutes | Hours): Minutes;
   export function add(dest: Hours, source: Hours): Hours;
   export function add<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count += (source.count * source.unit) * dest.unit;
+    dest.count += Math.round((source.count * source.unit) * dest.unit);
     return dest;
   }
 
@@ -56,8 +56,12 @@ export namespace Duration {
   export function sub(dest: Minutes, source: Minutes | Hours): Minutes;
   export function sub(dest: Hours, source: Hours): Hours;
   export function sub<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count -= (source.count * source.unit) * dest.unit;
+    dest.count -= Math.round((source.count * source.unit) * dest.unit);
     return dest;
+  }
+
+  export function areEqual<T extends number, U extends number>(lhs: Duration<T>, rhs?: Duration<U>): boolean {
+    return rhs != null && (lhs.count * lhs.unit) === (rhs.count * rhs.unit);
   }
 
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs?: Duration<U>): boolean {
@@ -76,7 +80,11 @@ export namespace Duration {
   //   return duration.count * duration.unit;
   // }
 
-  export function toString(duration: Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours): string {
+  export function valueOf<T extends number>(duration: Duration<T>): number {
+    return duration.unit * duration.count;
+  }
+
+  export function toString<T extends number>(duration: Duration<T>): string {
     if (isNanoseconds(duration)) return `${duration.count}ns`;
     else if (isMicroseconds(duration)) return `${duration.count}µs`;
     else if (isMilliseconds(duration)) return `${duration.count}ms`;
