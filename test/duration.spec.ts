@@ -3,7 +3,7 @@ import 'mocha';
 
 import { createSandbox, getSandbox, destroySandbox } from './support/helpers';
 
-import {} from '../src/chrono';
+import { Duration } from '../src/chrono';
 
 beforeEach((done) => {
   createSandbox();
@@ -15,14 +15,10 @@ afterEach((done) => {
   done();
 });
 
-class AggregateType {
-  constructor(properties?: {}) {
-    for (let key of Object.keys(properties || {})) {
-      (this as any)[key] = (properties as any)[key];
-    }
-  }
-}
-
 describe('Placeholder', () => {
-  it('works', () => {});
+  it('works', () => {
+    const twoSeconds = Duration.seconds(2);
+    expect(twoSeconds.unit).to.eql(1);
+    expect(twoSeconds.count).to.eql(2);
+  });
 });
