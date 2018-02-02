@@ -1,0 +1,4 @@
+--require ./test/support/register-ts-node.js
+--require source-map-support/register
+--recursive
+./test/**/*.spec.ts
