@@ -7,7 +7,6 @@ export interface Duration<Unit extends number> {
   add<T extends number>(duration: Duration<T>): void;
   sub<T extends number>(duration: Duration<T>): void;
 
-  isEqual<T extends number>(duration: Duration<T>): void;
   isShorter<T extends number>(duration: Duration<T>): void;
   isLonger<T extends number>(duration: Duration<T>): void;
 
@@ -16,26 +15,23 @@ export interface Duration<Unit extends number> {
 
 export type DurationConstructor<Unit extends number> = {
   readonly unit: Unit;
-  new<T extends number>(duration: Duration<T>): Duration<Unit>;
 }
 
 export class Nanoseconds implements Duration<1e-9> {
   static get unit() { return 1e-9 as 1e-9; }
-  public get unit() { return Nanoseconds.unit; }
-  public get count() { return this._count; }
 
-  _count: number = 0;
+  public get unit() { return Nanoseconds.unit; }
+  public get count() { return this.ticks; }
+
+  private ticks: number = 0;
 
   assign<T extends number>(duration: Duration<T>): void {
-    throw new Error("Method not implemented.");
+    this.ticks = (duration.count * duration.unit) * this.unit;
   }
   add<T extends number>(duration: Duration<T>): void {
     throw new Error("Method not implemented.");
   }
   sub<T extends number>(duration: Duration<T>): void {
-    throw new Error("Method not implemented.");
-  }
-  isEqual<T extends number>(duration: Duration<T>): void {
     throw new Error("Method not implemented.");
   }
   isShorter<T extends number>(duration: Duration<T>): void {
