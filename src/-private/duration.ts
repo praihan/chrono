@@ -111,49 +111,37 @@ export namespace Duration {
   export function nanoseconds(count: number): Nanoseconds;
   export function nanoseconds(duration: Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours): Nanoseconds;
   export function nanoseconds(arg: number | Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours): Nanoseconds {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Nanosecond;
-    return new DurationObject(DurationSize.Nanosecond, count);
+    return createDurationFromArg(DurationSize.Nanosecond, arg);
   }
 
   export function microseconds(count: number): Microseconds;
   export function microseconds(duration: Microseconds | Milliseconds | Seconds | Minutes | Hours): Microseconds;
   export function microseconds(arg: number | Microseconds | Milliseconds | Seconds | Minutes | Hours): Microseconds {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Microsecond;
-    return new DurationObject(DurationSize.Microsecond, count);
+    return createDurationFromArg(DurationSize.Microsecond, arg);
   }
 
   export function milliseconds(count: number): Milliseconds;
   export function milliseconds(duration: Milliseconds | Seconds | Minutes | Hours): Milliseconds;
   export function milliseconds(arg: number | Milliseconds | Seconds | Minutes | Hours): Milliseconds {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Millisecond;
-    return new DurationObject(DurationSize.Millisecond, count);
+    return createDurationFromArg(DurationSize.Millisecond, arg);
   }
 
   export function seconds(count: number): Seconds;
   export function seconds(duration: Seconds | Minutes | Hours): Seconds;
   export function seconds(arg: number | Seconds | Minutes | Hours): Seconds {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Second;
-    return new DurationObject(DurationSize.Second, count);
+    return createDurationFromArg(DurationSize.Second, arg);
   }
 
   export function minutes(count: number): Minutes;
   export function minutes(duration: Minutes | Hours): Minutes;
   export function minutes(arg: number | Minutes | Hours): Minutes {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Minute;
-    return new DurationObject(DurationSize.Minute, count);
+    return createDurationFromArg(DurationSize.Minute, arg);
   }
 
   export function hours(count: number): Hours;
   export function hours(duration: Hours): Hours;
   export function hours(arg: number | Hours): Hours {
-    const count = typeof arg === 'number' ?
-      arg : (arg.count * arg.unit) / DurationSize.Hour;
-    return new DurationObject(DurationSize.Hour, count);
+    return createDurationFromArg(DurationSize.Hour, arg);
   }
   /* tslint:enable:unified-signatures */
 
@@ -192,4 +180,13 @@ export namespace Duration {
   export function isHours<T extends number>(duration: Duration<T>): boolean {
     return duration.unit === DurationSize.Hour;
   }
+}
+
+function createDurationFromArg<T extends number, U extends number>(unit: T, arg: number | Duration<U>): Duration<T> {
+  let count: number;
+  if (typeof arg === 'number') {
+    if (!Number.isInteger(arg)) throw TypeError();
+    count = arg;
+  } else count = (arg.count * arg.unit) / unit;
+  return new DurationObject(unit, count);
 }

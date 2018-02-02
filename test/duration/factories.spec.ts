@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { createSandbox, getSandbox, destroySandbox } from './support/helpers';
+import { createSandbox, getSandbox, destroySandbox } from '../support/helpers';
 
 import {
   Duration,
@@ -11,7 +11,7 @@ import {
   Seconds,
   Minutes,
   Hours
-} from '../src/chrono';
+} from '../../src/chrono';
 
 const {
   nanoseconds,
@@ -24,7 +24,7 @@ const {
 
 import {
   DurationSize
-} from '../src/-private/duration';
+} from '../../src/-private/duration';
 
 beforeEach((done) => {
   createSandbox();
