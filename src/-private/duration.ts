@@ -13,7 +13,17 @@ export interface Duration<Unit extends number> {
 }
 
 export class DurationObject<T extends number> implements Duration<T> {
-  constructor(public unit: T, public count: number) { }
+  get unit() { return this._unit; }
+  get count() { return this._count; }
+  set count(value) { this._count = Math.round(value); }
+
+  private _unit: T;
+  private _count: number;
+
+  constructor(unit: T, count: number) {
+    this._unit = unit;
+    this._count = Math.round(count);
+  }
   valueOf() { return Duration.valueOf(this); }
   toString() { return Duration.toString(this); }
 }
@@ -34,7 +44,7 @@ export namespace Duration {
   export function assign(dest: Minutes, source: Minutes | Hours): Minutes;
   export function assign(dest: Hours, source: Hours): Hours;
   export function assign<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count = Math.round((source.count * source.unit) * dest.unit);
+    dest.count = (source.count * source.unit) / dest.unit;
     return dest;
   }
 
@@ -45,7 +55,7 @@ export namespace Duration {
   export function add(dest: Minutes, source: Minutes | Hours): Minutes;
   export function add(dest: Hours, source: Hours): Hours;
   export function add<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count += Math.round((source.count * source.unit) * dest.unit);
+    dest.count += (source.count * source.unit) / dest.unit;
     return dest;
   }
 
@@ -56,12 +66,15 @@ export namespace Duration {
   export function sub(dest: Minutes, source: Minutes | Hours): Minutes;
   export function sub(dest: Hours, source: Hours): Hours;
   export function sub<T extends number, U extends number>(dest: Duration<T>, source: Duration<U>): Duration<T> {
-    dest.count -= Math.round((source.count * source.unit) * dest.unit);
+    dest.count -= (source.count * source.unit) / dest.unit;
     return dest;
   }
 
   export function areEqual<T extends number, U extends number>(lhs: Duration<T>, rhs?: Duration<U>): boolean {
-    return rhs != null && (lhs.count * lhs.unit) === (rhs.count * rhs.unit);
+    if (rhs == null) return false;
+    const lhsNano = Math.round(lhs.count * lhs.unit / DurationSize.Nanosecond);
+    const rhsNano = Math.round(rhs.count * rhs.unit / DurationSize.Nanosecond)
+    return lhsNano === rhsNano;
   }
 
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs?: Duration<U>): boolean {
@@ -94,24 +107,55 @@ export namespace Duration {
     else return `${duration.count}(unit:${duration.unit})`;
   }
 
-  export function nanoseconds(count: number): Nanoseconds {
+  /* tslint:disable:unified-signatures */
+  export function nanoseconds(count: number): Nanoseconds;
+  export function nanoseconds(duration: Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours): Nanoseconds;
+  export function nanoseconds(arg: number | Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours): Nanoseconds {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Nanosecond;
     return new DurationObject(DurationSize.Nanosecond, count);
   }
-  export function microseconds(count: number): Microseconds {
+
+  export function microseconds(count: number): Microseconds;
+  export function microseconds(duration: Microseconds | Milliseconds | Seconds | Minutes | Hours): Microseconds;
+  export function microseconds(arg: number | Microseconds | Milliseconds | Seconds | Minutes | Hours): Microseconds {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Microsecond;
     return new DurationObject(DurationSize.Microsecond, count);
   }
-  export function milliseconds(count: number): Milliseconds {
+
+  export function milliseconds(count: number): Milliseconds;
+  export function milliseconds(duration: Milliseconds | Seconds | Minutes | Hours): Milliseconds;
+  export function milliseconds(arg: number | Milliseconds | Seconds | Minutes | Hours): Milliseconds {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Millisecond;
     return new DurationObject(DurationSize.Millisecond, count);
   }
-  export function seconds(count: number): Seconds {
+
+  export function seconds(count: number): Seconds;
+  export function seconds(duration: Seconds | Minutes | Hours): Seconds;
+  export function seconds(arg: number | Seconds | Minutes | Hours): Seconds {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Second;
     return new DurationObject(DurationSize.Second, count);
   }
-  export function minutes(count: number): Minutes {
+
+  export function minutes(count: number): Minutes;
+  export function minutes(duration: Minutes | Hours): Minutes;
+  export function minutes(arg: number | Minutes | Hours): Minutes {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Minute;
     return new DurationObject(DurationSize.Minute, count);
   }
-  export function hours(count: number): Hours {
+
+  export function hours(count: number): Hours;
+  export function hours(duration: Hours): Hours;
+  export function hours(arg: number | Hours): Hours {
+    const count = typeof arg === 'number' ?
+      arg : (arg.count * arg.unit) / DurationSize.Hour;
     return new DurationObject(DurationSize.Hour, count);
   }
+  /* tslint:enable:unified-signatures */
 
   export function isNanoseconds(duration: Nanoseconds): duration is Nanoseconds;
   export function isNanoseconds<T extends number>(duration: Duration<T>): false;
