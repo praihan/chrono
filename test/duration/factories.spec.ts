@@ -58,6 +58,11 @@ describe('Duration.[factory]', () => {
       expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
       expect(dur.count).to.equal(2e9 * 60 * 60);
     });
+    it('correctly clones', () => {
+      const dur: Nanoseconds = Duration.clone(nanoseconds(2));
+      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.count).to.equal(2);
+    });
     it('throws unless count is integral', () => {
       expect(() => nanoseconds(1.5)).to.throw(TypeError);
     });
@@ -94,6 +99,11 @@ describe('Duration.[factory]', () => {
       expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
       expect(dur.count).to.equal(2e6 * 60 * 60);
     });
+    it('correctly clones', () => {
+      const dur: Microseconds = Duration.clone(microseconds(-2));
+      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.count).to.equal(-2);
+    });
     it('throws unless count is integral', () => {
       expect(() => microseconds(1.5)).to.throw(TypeError);
     });
@@ -125,6 +135,11 @@ describe('Duration.[factory]', () => {
       expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
       expect(dur.count).to.equal(2e3 * 60 * 60);
     });
+    it('correctly clones', () => {
+      const dur: Milliseconds = Duration.clone(milliseconds(2));
+      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.count).to.equal(2);
+    });
     it('throws unless count is integral', () => {
       expect(() => milliseconds(1.5)).to.throw(TypeError);
     });
@@ -151,6 +166,11 @@ describe('Duration.[factory]', () => {
       expect(dur.unit).to.equal(DurationUnitSize.Second);
       expect(dur.count).to.equal(2 * 60 * 60);
     });
+    it('correctly clones', () => {
+      const dur: Seconds = Duration.clone(seconds(-2));
+      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.count).to.equal(-2);
+    });
     it('throws unless count is integral', () => {
       expect(() => seconds(1.5)).to.throw(TypeError);
     });
@@ -172,6 +192,11 @@ describe('Duration.[factory]', () => {
       expect(dur.unit).to.equal(DurationUnitSize.Minute);
       expect(dur.count).to.equal(2 * 60);
     });
+    it('correctly clones', () => {
+      const dur: Minutes = Duration.clone(minutes(2));
+      expect(dur.unit).to.equal(DurationUnitSize.Minute);
+      expect(dur.count).to.equal(2);
+    });
     it('throws unless count is integral', () => {
       expect(() => minutes(1.5)).to.throw(TypeError);
     });
@@ -187,6 +212,11 @@ describe('Duration.[factory]', () => {
       const dur: Hours = hours(hours(2));
       expect(dur.unit).to.equal(DurationUnitSize.Hour);
       expect(dur.count).to.equal(2);
+    });
+    it('correctly clones', () => {
+      const dur: Hours = Duration.clone(hours(-2));
+      expect(dur.unit).to.equal(DurationUnitSize.Hour);
+      expect(dur.count).to.equal(-2);
     });
     it('throws unless count is integral', () => {
       expect(() => hours(1.5)).to.throw(TypeError);

@@ -220,6 +220,8 @@ export namespace Duration {
   // #endregion
 }
 
+
+
 // #region privates
 
 export class DurationObject<T extends number> implements Duration<T> {
