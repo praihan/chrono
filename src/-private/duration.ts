@@ -192,6 +192,9 @@ export namespace Duration {
   export function roundTo<T extends number, U extends number>(unit: T, duration: Duration<U>): Duration<T> {
     return createDurationWithConversion(unit, duration, Math.round);
   }
+  export function abs<T extends number>(duration: Duration<T>): Duration<T> {
+    return new DurationObject(duration.unit, Math.abs(duration.count));
+  }
 
   // #endregion
 
