@@ -38,26 +38,17 @@ export type AtMostHours = Hours | AtMostMinutes;
 export namespace Duration {
 
   export function add(lhs: Nanoseconds, rhs: AtLeastNanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostNanoseconds>(lhs: Nanoseconds, rhs: DurationType): DurationType;
   export function add(lhs: Microseconds, rhs: AtLeastMicroseconds): Microseconds;
-  export function add(lhs: Microseconds, rhs: Nanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostMicroseconds>(lhs: Microseconds, rhs: DurationType): DurationType;
   export function add(lhs: Milliseconds, rhs: AtLeastMilliseconds): Milliseconds;
-  export function add(lhs: Milliseconds, rhs: Microseconds): Microseconds;
-  export function add(lhs: Milliseconds, rhs: Nanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostMilliseconds>(lhs: Milliseconds, rhs: DurationType): DurationType;
   export function add(lhs: Seconds, rhs: AtLeastSeconds): Seconds;
-  export function add(lhs: Seconds, rhs: Milliseconds): Milliseconds;
-  export function add(lhs: Seconds, rhs: Microseconds): Microseconds;
-  export function add(lhs: Seconds, rhs: Nanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostSeconds>(lhs: Seconds, rhs: DurationType): DurationType;
   export function add(lhs: Minutes, rhs: AtLeastMinutes): Minutes;
-  export function add(lhs: Minutes, rhs: Seconds): Seconds;
-  export function add(lhs: Minutes, rhs: Milliseconds): Milliseconds;
-  export function add(lhs: Minutes, rhs: Microseconds): Microseconds;
-  export function add(lhs: Minutes, rhs: Nanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostMinutes>(lhs: Minutes, rhs: DurationType): DurationType;
   export function add(lhs: Hours, rhs: AtLeastHours): Hours;
-  export function add(lhs: Hours, rhs: Minutes): Minutes;
-  export function add(lhs: Hours, rhs: Seconds): Seconds;
-  export function add(lhs: Hours, rhs: Milliseconds): Milliseconds;
-  export function add(lhs: Hours, rhs: Microseconds): Microseconds;
-  export function add(lhs: Hours, rhs: Nanoseconds): Nanoseconds;
+  export function add<DurationType extends AtMostHours>(lhs: Hours, rhs: DurationType): DurationType;
   export function add(lhs: AnyDuration, rhs: AnyDuration): AnyDuration {
     const unit = Math.min(lhs.unit, rhs.unit);
     const count = (lhs.count * lhs.unit) / unit + (rhs.count * rhs.unit) / unit;
@@ -65,26 +56,17 @@ export namespace Duration {
   }
 
   export function sub(lhs: Nanoseconds, rhs: AtLeastNanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostNanoseconds>(lhs: Nanoseconds, rhs: DurationType): DurationType;
   export function sub(lhs: Microseconds, rhs: AtLeastMicroseconds): Microseconds;
-  export function sub(lhs: Microseconds, rhs: Nanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostMicroseconds>(lhs: Microseconds, rhs: DurationType): DurationType;
   export function sub(lhs: Milliseconds, rhs: AtLeastMilliseconds): Milliseconds;
-  export function sub(lhs: Milliseconds, rhs: Microseconds): Microseconds;
-  export function sub(lhs: Milliseconds, rhs: Nanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostMilliseconds>(lhs: Milliseconds, rhs: DurationType): DurationType;
   export function sub(lhs: Seconds, rhs: AtLeastSeconds): Seconds;
-  export function sub(lhs: Seconds, rhs: Milliseconds): Milliseconds;
-  export function sub(lhs: Seconds, rhs: Microseconds): Microseconds;
-  export function sub(lhs: Seconds, rhs: Nanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostSeconds>(lhs: Seconds, rhs: DurationType): DurationType;
   export function sub(lhs: Minutes, rhs: AtLeastMinutes): Minutes;
-  export function sub(lhs: Minutes, rhs: Seconds): Seconds;
-  export function sub(lhs: Minutes, rhs: Milliseconds): Milliseconds;
-  export function sub(lhs: Minutes, rhs: Microseconds): Microseconds;
-  export function sub(lhs: Minutes, rhs: Nanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostMinutes>(lhs: Minutes, rhs: DurationType): DurationType;
   export function sub(lhs: Hours, rhs: AtLeastHours): Hours;
-  export function sub(lhs: Hours, rhs: Minutes): Minutes;
-  export function sub(lhs: Hours, rhs: Seconds): Seconds;
-  export function sub(lhs: Hours, rhs: Milliseconds): Milliseconds;
-  export function sub(lhs: Hours, rhs: Microseconds): Microseconds;
-  export function sub(lhs: Hours, rhs: Nanoseconds): Nanoseconds;
+  export function sub<DurationType extends AtMostHours>(lhs: Hours, rhs: DurationType): DurationType;
   export function sub(lhs: AnyDuration, rhs: AnyDuration): AnyDuration {
     const unit = Math.min(lhs.unit, rhs.unit);
     const count = (lhs.count * lhs.unit) / unit - (rhs.count * rhs.unit) / unit;
