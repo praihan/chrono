@@ -124,9 +124,9 @@ describe('Duration.sub', () => {
 
   describe('with lhs of seconds', () => {
     it('can sub nanoseconds', () => {
-      const dur: Nanoseconds = Duration.sub(seconds(7), nanoseconds(3e9));
+      const dur: Nanoseconds = Duration.sub(seconds(7), nanoseconds(4));
       expect(dur.unit).to.equal(UnitSize.Nanosecond);
-      expect(dur.count).to.equal(4e9);
+      expect(dur.count).to.equal(7e9 - 4);
     });
     it('can sub microseconds', () => {
       const dur: Microseconds = Duration.sub(seconds(7), microseconds(3e6));

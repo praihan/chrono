@@ -1,4 +1,6 @@
-// #region types 
+// #region types
+
+// import assert from 'assert';
 
 export namespace Duration {
   export enum UnitSize {
@@ -62,7 +64,7 @@ export namespace Duration {
   export function add(lhs: AnyDuration, rhs: AnyDuration): AnyDuration {
     const unit = Math.min(lhs.unit, rhs.unit);
     const count = (lhs.count * lhs.unit) / unit + (rhs.count * rhs.unit) / unit;
-    return new DurationObject(unit, count);
+    return new DurationObject(unit, Math.round(count));
   }
 
   export function sub(lhs: Nanoseconds, rhs: AtLeastNanoseconds): Nanoseconds;
@@ -80,7 +82,7 @@ export namespace Duration {
   export function sub(lhs: AnyDuration, rhs: AnyDuration): AnyDuration {
     const unit = Math.min(lhs.unit, rhs.unit);
     const count = (lhs.count * lhs.unit) / unit - (rhs.count * rhs.unit) / unit;
-    return new DurationObject(unit, count);
+    return new DurationObject(unit, Math.round(count));
   }
 
   // #endregion
@@ -249,7 +251,8 @@ export class DurationObject<T extends number> implements Duration<T> {
 
   constructor(unit: T, count: number) {
     this.unit = unit;
-    this.count = Math.round(count);
+    // assert(Number.isInteger(count));
+    this.count = count;
   }
 
   valueOf() { return Duration.valueOf(this); }
@@ -262,10 +265,15 @@ function createDurationObjectFromArg<T extends number, U extends number>(unit: T
     if (!Number.isInteger(arg)) throw TypeError();
     count = arg;
   } else count = (arg.count * arg.unit) / unit;
-  return new DurationObject(unit, count);
+  return new DurationObject(unit, Math.round(count));
 }
 
 function createDurationWithConversion<T extends number, U extends number>(unit: T, duration: Duration<U>, convertFunc: (x: number) => number): Duration<T> {
+  // assert(unit !== 0);
+  // assert(unit < 1 || Number.isInteger(unit));
+  // assert(duration.unit !== 0);
+  // assert(duration.unit < 1 || Number.isInteger(duration.unit));
+
   const unitIsInt = Number.isInteger(unit);
   const durationUnitIsInt = Number.isInteger(duration.unit);
 
