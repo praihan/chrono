@@ -1,3 +1,5 @@
+// #region types 
+
 export enum DurationUnitSize {
   Nanosecond = 1e-9,
   Microsecond = 1e-6,
@@ -35,7 +37,13 @@ export type AtMostSeconds = Seconds | AtMostMilliseconds;
 export type AtMostMinutes = Minutes | AtMostSeconds;
 export type AtMostHours = Hours | AtMostMinutes;
 
+// #endregion
+
+
+
 export namespace Duration {
+
+  // #region arithmetic
 
   export function add(lhs: Nanoseconds, rhs: AtLeastNanoseconds): Nanoseconds;
   export function add<DurationType extends AtMostNanoseconds>(lhs: Nanoseconds, rhs: DurationType): DurationType;
@@ -73,25 +81,39 @@ export namespace Duration {
     return new DurationObject(unit, count);
   }
 
+  // #endregion
+
+
+
+  // #region comparison
+
   export function areEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
     return lhs.count === rhs.count;
   }
-
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
     return (lhs.count * lhs.unit) < (rhs.count * rhs.unit);
   }
-
+  export function isShorterOrEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
+    return lhs.count <= rhs.count;
+  }
   export function isLonger<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
     return (lhs.count * lhs.unit) > (rhs.count * rhs.unit);
   }
-
-  export function clone<T extends number>(duration: Duration<T>): Duration<T> {
-    return new DurationObject(duration.unit, duration.count);
+  export function isLongerOrEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
+    return lhs.count >= rhs.count;
   }
 
-  // export function timeSinceEpoch<T extends number>(duration: Duration<T>) {
-  //   return duration.count * duration.unit;
-  // }
+  export const eql = areEqual;
+  export const lt = isShorter;
+  export const lte = isShorterOrEqual;
+  export const gt = isLonger;
+  export const gte = isLongerOrEqual;
+
+  // #endregion
+
+
+
+  // #region object-related
 
   export function valueOf<T extends number>(duration: Duration<T>): number {
     return duration.unit * duration.count;
@@ -105,6 +127,16 @@ export namespace Duration {
     else if (isMinutes(duration)) return `${duration.count}m`;
     else if (isHours(duration)) return `${duration.count}h`;
     else return `${duration.count}(unit:${duration.unit})`;
+  }
+
+  // #endregion
+
+
+
+  // #region factories
+
+  export function clone<T extends number>(duration: Duration<T>): Duration<T> {
+    return new DurationObject(duration.unit, duration.count);
   }
 
   export function nanoseconds(count: number): Nanoseconds;
@@ -143,6 +175,12 @@ export namespace Duration {
     return createDurationObjectFromArg(DurationUnitSize.Hour, arg);
   }
 
+  // #endregion
+
+
+
+  // #region typecheck
+
   export function isNanoseconds(duration: Nanoseconds): duration is Nanoseconds;
   export function isNanoseconds<T extends number>(duration: Duration<T>): false;
   export function isNanoseconds<T extends number>(duration: Duration<T>): boolean {
@@ -178,7 +216,11 @@ export namespace Duration {
   export function isHours<T extends number>(duration: Duration<T>): boolean {
     return duration.unit === DurationUnitSize.Hour;
   }
+
+  // #endregion
 }
+
+// #region privates
 
 export class DurationObject<T extends number> implements Duration<T> {
   public readonly unit: T;
@@ -201,3 +243,5 @@ function createDurationObjectFromArg<T extends number, U extends number>(unit: T
   } else count = (arg.count * arg.unit) / unit;
   return new DurationObject(unit, count);
 }
+
+// #endregion
