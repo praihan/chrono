@@ -91,10 +91,8 @@ export namespace Duration {
     return new DurationObject(unit, count);
   }
 
-  export function areEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
-    const lhsNano = Math.round((lhs.count * lhs.unit) / DurationUnitSize.Nanosecond);
-    const rhsNano = Math.round((rhs.count * rhs.unit) / DurationUnitSize.Nanosecond);
-    return lhsNano === rhsNano;
+  export function areEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
+    return lhs.count === rhs.count;
   }
 
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
