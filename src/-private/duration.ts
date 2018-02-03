@@ -189,6 +189,9 @@ export namespace Duration {
   export function ceilTo<T extends number, U extends number>(unit: T, duration: Duration<U>): Duration<T> {
     return createDurationWithConversion(unit, duration, Math.ceil);
   }
+  export function roundTo<T extends number, U extends number>(unit: T, duration: Duration<U>): Duration<T> {
+    return createDurationWithConversion(unit, duration, Math.round);
+  }
 
   // #endregion
 
