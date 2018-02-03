@@ -181,16 +181,14 @@ export namespace Duration {
 }
 
 export class DurationObject<T extends number> implements Duration<T> {
-  get unit() { return this._unit; }
-  get count() { return this._count; }
-
-  private _unit: T;
-  private _count: number;
+  public readonly unit: T;
+  public readonly count: number;
 
   constructor(unit: T, count: number) {
-    this._unit = unit;
-    this._count = Math.round(count);
+    this.unit = unit;
+    this.count = Math.round(count);
   }
+
   valueOf() { return Duration.valueOf(this); }
   toString() { return Duration.toString(this); }
 }
