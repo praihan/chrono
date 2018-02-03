@@ -9,10 +9,11 @@ import {
   Seconds,
   Minutes,
   Hours,
-  DurationUnitSize
 } from '../../src/chrono';
 
 const {
+  UnitSize,
+
   nanoseconds,
   microseconds,
   milliseconds,

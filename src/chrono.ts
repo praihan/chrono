@@ -22,6 +22,4 @@ export {
   Seconds,
   Minutes,
   Hours,
-
-  DurationUnitSize,
 } from './-private/duration';

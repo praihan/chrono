@@ -9,10 +9,11 @@ import {
   Seconds,
   Minutes,
   Hours,
-  DurationUnitSize
 } from '../../src/chrono';
 
 const {
+  UnitSize,
+
   nanoseconds,
   microseconds,
   milliseconds,
@@ -25,42 +26,42 @@ describe('Duration.[factory]', () => {
   describe('Nanoseconds', () => {
     it('correctly creates from count', () => {
       const dur: Nanoseconds = nanoseconds(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from nanoseconds', () => {
       const dur: Nanoseconds = nanoseconds(nanoseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from microseconds', () => {
       const dur: Nanoseconds = nanoseconds(microseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2e3);
     });
     it('correctly creates from milliseconds', () => {
       const dur: Nanoseconds = nanoseconds(milliseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2e6);
     });
     it('correctly creates from seconds', () => {
       const dur: Nanoseconds = nanoseconds(seconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2e9);
     });
     it('correctly creates from minutes', () => {
       const dur: Nanoseconds = nanoseconds(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2e9 * 60);
     });
     it('correctly creates from hours', () => {
       const dur: Nanoseconds = nanoseconds(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2e9 * 60 * 60);
     });
     it('correctly clones', () => {
       const dur: Nanoseconds = Duration.clone(nanoseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Nanosecond);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2);
     });
     it('throws unless count is integral', () => {
@@ -71,37 +72,37 @@ describe('Duration.[factory]', () => {
   describe('Microseconds', () => {
     it('correctly creates from count', () => {
       const dur: Microseconds = microseconds(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from microseconds', () => {
       const dur: Microseconds = microseconds(microseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from milliseconds', () => {
       const dur: Microseconds = microseconds(milliseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2e3);
     });
     it('correctly creates from seconds', () => {
       const dur: Microseconds = microseconds(seconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2e6);
     });
     it('correctly creates from minutes', () => {
       const dur: Microseconds = microseconds(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2e6 * 60);
     });
     it('correctly creates from hours', () => {
       const dur: Microseconds = microseconds(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2e6 * 60 * 60);
     });
     it('correctly clones', () => {
       const dur: Microseconds = Duration.clone(microseconds(-2));
-      expect(dur.unit).to.equal(DurationUnitSize.Microsecond);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(-2);
     });
     it('throws unless count is integral', () => {
@@ -112,32 +113,32 @@ describe('Duration.[factory]', () => {
   describe('Milliseconds', () => {
     it('correctly creates from count', () => {
       const dur: Milliseconds = milliseconds(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from milliseconds', () => {
       const dur: Milliseconds = milliseconds(milliseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from seconds', () => {
       const dur: Milliseconds = milliseconds(seconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2e3);
     });
     it('correctly creates from minutes', () => {
       const dur: Milliseconds = milliseconds(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2e3 * 60);
     });
     it('correctly creates from hours', () => {
       const dur: Milliseconds = milliseconds(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2e3 * 60 * 60);
     });
     it('correctly clones', () => {
       const dur: Milliseconds = Duration.clone(milliseconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Millisecond);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2);
     });
     it('throws unless count is integral', () => {
@@ -148,27 +149,27 @@ describe('Duration.[factory]', () => {
   describe('Seconds', () => {
     it('correctly creates from count', () => {
       const dur: Seconds = seconds(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from seconds', () => {
       const dur: Seconds = seconds(seconds(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from minutes', () => {
       const dur: Seconds = seconds(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(2 * 60);
     });
     it('correctly creates from hours', () => {
       const dur: Seconds = seconds(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(2 * 60 * 60);
     });
     it('correctly clones', () => {
       const dur: Seconds = Duration.clone(seconds(-2));
-      expect(dur.unit).to.equal(DurationUnitSize.Second);
+      expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(-2);
     });
     it('throws unless count is integral', () => {
@@ -179,22 +180,22 @@ describe('Duration.[factory]', () => {
   describe('Minutes', () => {
     it('correctly creates from count', () => {
       const dur: Minutes = minutes(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Minute);
+      expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from minutes', () => {
       const dur: Minutes = minutes(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Minute);
+      expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from hours', () => {
       const dur: Minutes = minutes(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Minute);
+      expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2 * 60);
     });
     it('correctly clones', () => {
       const dur: Minutes = Duration.clone(minutes(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Minute);
+      expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2);
     });
     it('throws unless count is integral', () => {
@@ -205,17 +206,17 @@ describe('Duration.[factory]', () => {
   describe('Hours', () => {
     it('correctly creates from count', () => {
       const dur: Hours = hours(2);
-      expect(dur.unit).to.equal(DurationUnitSize.Hour);
+      expect(dur.unit).to.equal(UnitSize.Hour);
       expect(dur.count).to.equal(2);
     });
     it('correctly creates from hours', () => {
       const dur: Hours = hours(hours(2));
-      expect(dur.unit).to.equal(DurationUnitSize.Hour);
+      expect(dur.unit).to.equal(UnitSize.Hour);
       expect(dur.count).to.equal(2);
     });
     it('correctly clones', () => {
       const dur: Hours = Duration.clone(hours(-2));
-      expect(dur.unit).to.equal(DurationUnitSize.Hour);
+      expect(dur.unit).to.equal(UnitSize.Hour);
       expect(dur.count).to.equal(-2);
     });
     it('throws unless count is integral', () => {
