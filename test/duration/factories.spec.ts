@@ -26,9 +26,16 @@ const {
 describe('Duration.[factory]', () => {
   describe('Nanoseconds', () => {
     it('correctly creates from count', () => {
-      const dur: Nanoseconds = nanoseconds(2);
+      let dur: Nanoseconds;
+      dur = nanoseconds(2);
       expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2);
+      dur = nanoseconds(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = nanoseconds(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Nanosecond);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from nanoseconds', () => {
       const dur: Nanoseconds = nanoseconds(nanoseconds(2));
@@ -68,13 +75,24 @@ describe('Duration.[factory]', () => {
     it('throws unless count is integral', () => {
       expect(() => nanoseconds(1.5)).to.throw(TypeError);
     });
+    it('throws if out of range', () => {
+      expect(() => nanoseconds(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => nanoseconds(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
+    });
   });
 
   describe('Microseconds', () => {
     it('correctly creates from count', () => {
-      const dur: Microseconds = microseconds(2);
+      let dur: Microseconds;
+      dur = microseconds(2);
       expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(2);
+      dur = microseconds(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = microseconds(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Microsecond);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from microseconds', () => {
       const dur: Microseconds = microseconds(microseconds(2));
@@ -109,13 +127,24 @@ describe('Duration.[factory]', () => {
     it('throws unless count is integral', () => {
       expect(() => microseconds(1.5)).to.throw(TypeError);
     });
+    it('throws if out of range', () => {
+      expect(() => microseconds(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => microseconds(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
+    });
   });
 
   describe('Milliseconds', () => {
     it('correctly creates from count', () => {
-      const dur: Milliseconds = milliseconds(2);
+      let dur: Milliseconds;
+      dur = milliseconds(2);
       expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2);
+      dur = milliseconds(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = milliseconds(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Millisecond);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from milliseconds', () => {
       const dur: Milliseconds = milliseconds(milliseconds(2));
@@ -145,13 +174,24 @@ describe('Duration.[factory]', () => {
     it('throws unless count is integral', () => {
       expect(() => milliseconds(1.5)).to.throw(TypeError);
     });
+    it('throws if out of range', () => {
+      expect(() => milliseconds(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => milliseconds(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
+    });
   });
 
   describe('Seconds', () => {
     it('correctly creates from count', () => {
-      const dur: Seconds = seconds(2);
+      let dur: Seconds;
+      dur = seconds(2);
       expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(2);
+      dur = seconds(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Second);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = seconds(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Second);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from seconds', () => {
       const dur: Seconds = seconds(seconds(2));
@@ -176,13 +216,24 @@ describe('Duration.[factory]', () => {
     it('throws unless count is integral', () => {
       expect(() => seconds(1.5)).to.throw(TypeError);
     });
+    it('throws if out of range', () => {
+      expect(() => seconds(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => seconds(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
+    });
   });
 
   describe('Minutes', () => {
     it('correctly creates from count', () => {
-      const dur: Minutes = minutes(2);
+      let dur: Minutes;
+      dur = minutes(2);
       expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2);
+      dur = minutes(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Minute);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = minutes(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Minute);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from minutes', () => {
       const dur: Minutes = minutes(minutes(2));
@@ -202,13 +253,24 @@ describe('Duration.[factory]', () => {
     it('throws unless count is integral', () => {
       expect(() => minutes(1.5)).to.throw(TypeError);
     });
+    it('throws if out of range', () => {
+      expect(() => minutes(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => minutes(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
+    });
   });
 
   describe('Hours', () => {
     it('correctly creates from count', () => {
-      const dur: Hours = hours(2);
+      let dur: Hours;
+      dur = hours(2);
       expect(dur.unit).to.equal(UnitSize.Hour);
       expect(dur.count).to.equal(2);
+      dur = hours(Number.MAX_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Hour);
+      expect(dur.count).to.equal(Number.MAX_SAFE_INTEGER);
+      dur = hours(Number.MIN_SAFE_INTEGER);
+      expect(dur.unit).to.equal(UnitSize.Hour);
+      expect(dur.count).to.equal(Number.MIN_SAFE_INTEGER);
     });
     it('correctly creates from hours', () => {
       const dur: Hours = hours(hours(2));
@@ -222,6 +284,10 @@ describe('Duration.[factory]', () => {
     });
     it('throws unless count is integral', () => {
       expect(() => hours(1.5)).to.throw(TypeError);
+    });
+    it('throws if out of range', () => {
+      expect(() => hours(Number.MAX_SAFE_INTEGER + 1)).to.throw(RangeError);
+      expect(() => hours(Number.MIN_SAFE_INTEGER - 1)).to.throw(RangeError);
     });
   });
 });
