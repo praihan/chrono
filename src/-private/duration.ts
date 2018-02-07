@@ -91,23 +91,31 @@ export namespace Duration {
 
   // #region comparison
 
-  export function areEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
-    return lhs.count === rhs.count;
+  export function isEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
+    if ((lhs.unit as number) < (rhs.unit as number)) {
+      const rhsToLhs: Duration<T> = floorTo(lhs.unit, rhs);
+      return lhs.count === rhsToLhs.count;
+    } else if ((lhs.unit as number) > (rhs.unit as number)) {
+      const lhsToRhs: Duration<U> = floorTo(rhs.unit, lhs);
+      return lhsToRhs.count === rhs.count;
+    } else {
+      return lhs.count === rhs.count;
+    }
   }
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
     return (lhs.count * lhs.unit) < (rhs.count * rhs.unit);
   }
-  export function isShorterOrEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
-    return lhs.count <= rhs.count;
+  export function isShorterOrEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
+    return isShorter(lhs, rhs) || isEqual(lhs, rhs);
   }
   export function isLonger<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
     return (lhs.count * lhs.unit) > (rhs.count * rhs.unit);
   }
-  export function isLongerOrEqual<T extends number>(lhs: Duration<T>, rhs: Duration<T>): boolean {
-    return lhs.count >= rhs.count;
+  export function isLongerOrEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
+    return isLonger(lhs, rhs) || isEqual(lhs, rhs);
   }
 
-  export const eql = areEqual;
+  export const eql = isEqual;
   export const lt = isShorter;
   export const lte = isShorterOrEqual;
   export const gt = isLonger;
@@ -251,7 +259,7 @@ export class DurationObject<T extends number> implements Duration<T> {
 
   constructor(unit: T, count: number) {
     this.unit = unit;
-    // assert(Number.isInteger(count));
+    if (!Number.isSafeInteger(count)) throw RangeError();
     this.count = count;
   }
 
