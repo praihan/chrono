@@ -56,4 +56,5 @@ describe('Duration.toString', () => {
   it('Minutes', () => expect(toString(minutes(4))).to.equal('4m'));
   it('Hours', () => expect(toString(hours(-4))).to.equal('-4h'));
   it('Unknown unit', () => expect(toString(Duration.floorTo(2, seconds(10)))).to.equal('5(unit:2)'));
+  it('has object toString', () => expect(nanoseconds(60 * -2e9).toString()).to.equal('-120000000000ns'));
 });
