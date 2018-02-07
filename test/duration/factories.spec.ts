@@ -19,7 +19,8 @@ const {
   milliseconds,
   seconds,
   minutes,
-  hours
+  hours,
+  clone,
 } = Duration;
 
 describe('Duration.[factory]', () => {
@@ -60,7 +61,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2e9 * 60 * 60);
     });
     it('correctly clones', () => {
-      const dur: Nanoseconds = Duration.clone(nanoseconds(2));
+      const dur: Nanoseconds = clone(nanoseconds(2));
       expect(dur.unit).to.equal(UnitSize.Nanosecond);
       expect(dur.count).to.equal(2);
     });
@@ -101,7 +102,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2e6 * 60 * 60);
     });
     it('correctly clones', () => {
-      const dur: Microseconds = Duration.clone(microseconds(-2));
+      const dur: Microseconds = clone(microseconds(-2));
       expect(dur.unit).to.equal(UnitSize.Microsecond);
       expect(dur.count).to.equal(-2);
     });
@@ -137,7 +138,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2e3 * 60 * 60);
     });
     it('correctly clones', () => {
-      const dur: Milliseconds = Duration.clone(milliseconds(2));
+      const dur: Milliseconds = clone(milliseconds(2));
       expect(dur.unit).to.equal(UnitSize.Millisecond);
       expect(dur.count).to.equal(2);
     });
@@ -168,7 +169,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2 * 60 * 60);
     });
     it('correctly clones', () => {
-      const dur: Seconds = Duration.clone(seconds(-2));
+      const dur: Seconds = clone(seconds(-2));
       expect(dur.unit).to.equal(UnitSize.Second);
       expect(dur.count).to.equal(-2);
     });
@@ -194,7 +195,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2 * 60);
     });
     it('correctly clones', () => {
-      const dur: Minutes = Duration.clone(minutes(2));
+      const dur: Minutes = clone(minutes(2));
       expect(dur.unit).to.equal(UnitSize.Minute);
       expect(dur.count).to.equal(2);
     });
@@ -215,7 +216,7 @@ describe('Duration.[factory]', () => {
       expect(dur.count).to.equal(2);
     });
     it('correctly clones', () => {
-      const dur: Hours = Duration.clone(hours(-2));
+      const dur: Hours = clone(hours(-2));
       expect(dur.unit).to.equal(UnitSize.Hour);
       expect(dur.count).to.equal(-2);
     });
