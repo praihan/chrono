@@ -24,6 +24,7 @@ const {
   hours,
 
   valueOf,
+  toString,
 } = Duration;
 
 describe('Duration.valueOf', () => {
@@ -45,4 +46,14 @@ describe('Duration.valueOf', () => {
     const hour = hours(4);
     expect([nano, micro, milli, sec, min, hour].sort(compare)).to.eql([sec, milli, micro, nano, hour, min]);
   });
+});
+
+describe('Duration.toString', () => {
+  it('Nanoseconds', () => expect(toString(nanoseconds(60 * -2e9))).to.equal('-120000000000ns'));
+  it('Microseconds', () => expect(toString(microseconds(60 * 4e9 + 1))).to.equal('240000000001µs'));
+  it('Milliseconds', () => expect(toString(milliseconds(4e9 + 1))).to.equal('4000000001ms'));
+  it('Seconds', () => expect(toString(seconds(4e9 + 1))).to.equal('4000000001s'));
+  it('Minutes', () => expect(toString(minutes(4))).to.equal('4m'));
+  it('Hours', () => expect(toString(hours(-4))).to.equal('-4h'));
+  it('Unknown unit', () => expect(toString(Duration.floorTo(2, seconds(10)))).to.equal('5(unit:2)'));
 });
