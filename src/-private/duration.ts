@@ -103,23 +103,27 @@ export namespace Duration {
     }
   }
   export function isShorter<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
-    return (lhs.count * lhs.unit) < (rhs.count * rhs.unit);
-  }
-  export function isShorterOrEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
-    return isShorter(lhs, rhs) || isEqual(lhs, rhs);
+    if ((lhs.unit as number) < (rhs.unit as number)) {
+      const rhsToLhs: Duration<T> = floorTo(lhs.unit, rhs);
+      return lhs.count < rhsToLhs.count;
+    } else if ((lhs.unit as number) > (rhs.unit as number)) {
+      const lhsToRhs: Duration<U> = floorTo(rhs.unit, lhs);
+      return lhsToRhs.count < rhs.count;
+    } else {
+      return lhs.count < rhs.count;
+    }
   }
   export function isLonger<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
-    return (lhs.count * lhs.unit) > (rhs.count * rhs.unit);
+    if ((lhs.unit as number) < (rhs.unit as number)) {
+      const rhsToLhs: Duration<T> = floorTo(lhs.unit, rhs);
+      return lhs.count > rhsToLhs.count;
+    } else if ((lhs.unit as number) > (rhs.unit as number)) {
+      const lhsToRhs: Duration<U> = floorTo(rhs.unit, lhs);
+      return lhsToRhs.count > rhs.count;
+    } else {
+      return lhs.count > rhs.count;
+    }
   }
-  export function isLongerOrEqual<T extends number, U extends number>(lhs: Duration<T>, rhs: Duration<U>): boolean {
-    return isLonger(lhs, rhs) || isEqual(lhs, rhs);
-  }
-
-  export const eql = isEqual;
-  export const lt = isShorter;
-  export const lte = isShorterOrEqual;
-  export const gt = isLonger;
-  export const gte = isLongerOrEqual;
 
   // #endregion
 
