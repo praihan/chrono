@@ -132,7 +132,10 @@ export namespace Duration {
   // #region object-related
 
   export function valueOf<T extends number>(duration: Duration<T>): number {
-    return duration.unit * duration.count;
+    if (Number.isInteger(duration.unit)) {
+      return duration.unit * duration.count;
+    }
+    return duration.count / Math.round(1 / duration.unit);
   }
 
   export function toString<T extends number>(duration: Duration<T>): string {
