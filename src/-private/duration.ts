@@ -1,6 +1,6 @@
-// #region types
+import { assert } from './assert';
 
-// import assert from 'assert';
+// #region types
 
 export namespace Duration {
   export enum UnitSize {
@@ -284,10 +284,10 @@ function createDurationObjectFromArg<T extends number, U extends number>(unit: T
 }
 
 function createDurationWithConversion<T extends number, U extends number>(unit: T, duration: Duration<U>, convertFunc: (x: number) => number): Duration<T> {
-  // assert(unit !== 0);
-  // assert(unit < 1 || Number.isInteger(unit));
-  // assert(duration.unit !== 0);
-  // assert(duration.unit < 1 || Number.isInteger(duration.unit));
+  assert(unit !== 0);
+  assert(unit < 1 || Number.isInteger(unit));
+  assert(duration.unit !== 0);
+  assert(duration.unit < 1 || Number.isInteger(duration.unit));
 
   const unitIsInt = Number.isInteger(unit);
   const durationUnitIsInt = Number.isInteger(duration.unit);
