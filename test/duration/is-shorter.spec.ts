@@ -12,8 +12,6 @@ import {
 } from '../../src/chrono';
 
 const {
-  UnitSize,
-
   nanoseconds,
   microseconds,
   milliseconds,

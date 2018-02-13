@@ -1,29 +1,19 @@
 import { assert } from './assert';
+import { Unit } from './unit';
 
 // #region types
 
-export namespace Duration {
-  export enum UnitSize {
-    Nanosecond = 1e-9,
-    Microsecond = 1e-6,
-    Millisecond = 1e-3,
-    Second = 1,
-    Minute = 60,
-    Hour = 3600,
-  }
-}
-
-export interface Duration<Unit extends number> {
-  readonly unit: Unit;
+export interface Duration<UnitValue extends number> {
+  readonly unit: UnitValue;
   readonly count: number;
 }
 
-export type Nanoseconds = Duration<Duration.UnitSize.Nanosecond>;
-export type Microseconds = Duration<Duration.UnitSize.Microsecond>;
-export type Milliseconds = Duration<Duration.UnitSize.Millisecond>;
-export type Seconds = Duration<Duration.UnitSize.Second>;
-export type Minutes = Duration<Duration.UnitSize.Minute>;
-export type Hours = Duration<Duration.UnitSize.Hour>;
+export type Nanoseconds = Duration<Unit.Nanosecond>;
+export type Microseconds = Duration<Unit.Microsecond>;
+export type Milliseconds = Duration<Unit.Millisecond>;
+export type Seconds = Duration<Unit.Second>;
+export type Minutes = Duration<Unit.Minute>;
+export type Hours = Duration<Unit.Hour>;
 
 export type AnyDuration = Nanoseconds | Microseconds | Milliseconds | Seconds | Minutes | Hours;
 
@@ -161,37 +151,37 @@ export namespace Duration {
   export function nanoseconds(count: number): Nanoseconds;
   export function nanoseconds(duration: AtLeastNanoseconds): Nanoseconds;
   export function nanoseconds(arg: number | AtLeastNanoseconds): Nanoseconds {
-    return createDurationObjectFromArg(UnitSize.Nanosecond, arg);
+    return createDurationObjectFromArg(Unit.Nanosecond, arg);
   }
 
   export function microseconds(count: number): Microseconds;
   export function microseconds(duration: AtLeastMicroseconds): Microseconds;
   export function microseconds(arg: number | AtLeastMicroseconds): Microseconds {
-    return createDurationObjectFromArg(UnitSize.Microsecond, arg);
+    return createDurationObjectFromArg(Unit.Microsecond, arg);
   }
 
   export function milliseconds(count: number): Milliseconds;
   export function milliseconds(duration: AtLeastMilliseconds): Milliseconds;
   export function milliseconds(arg: number | AtLeastMilliseconds): Milliseconds {
-    return createDurationObjectFromArg(UnitSize.Millisecond, arg);
+    return createDurationObjectFromArg(Unit.Millisecond, arg);
   }
 
   export function seconds(count: number): Seconds;
   export function seconds(duration: AtLeastSeconds): Seconds;
   export function seconds(arg: number | AtLeastSeconds): Seconds {
-    return createDurationObjectFromArg(UnitSize.Second, arg);
+    return createDurationObjectFromArg(Unit.Second, arg);
   }
 
   export function minutes(count: number): Minutes;
   export function minutes(duration: AtLeastMinutes): Minutes;
   export function minutes(arg: number | AtLeastMinutes): Minutes {
-    return createDurationObjectFromArg(UnitSize.Minute, arg);
+    return createDurationObjectFromArg(Unit.Minute, arg);
   }
 
   export function hours(count: number): Hours;
   export function hours(duration: AtLeastHours): Hours;
   export function hours(arg: number | AtLeastHours): Hours {
-    return createDurationObjectFromArg(UnitSize.Hour, arg);
+    return createDurationObjectFromArg(Unit.Hour, arg);
   }
 
   // #endregion
@@ -220,37 +210,37 @@ export namespace Duration {
   export function isNanoseconds(duration: Nanoseconds): duration is Nanoseconds;
   export function isNanoseconds<T extends number>(duration: Duration<T>): false;
   export function isNanoseconds<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Nanosecond;
+    return duration.unit === Unit.Nanosecond;
   }
 
   export function isMicroseconds(duration: Microseconds): duration is Microseconds;
   export function isMicroseconds<T extends number>(duration: Duration<T>): false;
   export function isMicroseconds<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Microsecond;
+    return duration.unit === Unit.Microsecond;
   }
 
   export function isMilliseconds(duration: Milliseconds): duration is Milliseconds;
   export function isMilliseconds<T extends number>(duration: Duration<T>): false;
   export function isMilliseconds<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Millisecond;
+    return duration.unit === Unit.Millisecond;
   }
 
   export function isSeconds(duration: Seconds): duration is Seconds;
   export function isSeconds<T extends number>(duration: Duration<T>): false;
   export function isSeconds<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Second;
+    return duration.unit === Unit.Second;
   }
 
   export function isMinutes(duration: Minutes): duration is Minutes;
   export function isMinutes<T extends number>(duration: Duration<T>): false;
   export function isMinutes<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Minute;
+    return duration.unit === Unit.Minute;
   }
 
   export function isHours(duration: Hours): duration is Hours;
   export function isHours<T extends number>(duration: Duration<T>): false;
   export function isHours<T extends number>(duration: Duration<T>): boolean {
-    return duration.unit === UnitSize.Hour;
+    return duration.unit === Unit.Hour;
   }
 
   // #endregion

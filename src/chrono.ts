@@ -1,4 +1,8 @@
 export {
+  Unit,
+} from './-private/unit';
+
+export {
   Duration,
   AnyDuration,
   

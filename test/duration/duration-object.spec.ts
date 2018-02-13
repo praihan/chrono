@@ -14,8 +14,6 @@ import {
 import { DurationObject } from '../../src/-private/duration';
 
 const {
-  UnitSize,
-
   nanoseconds,
   microseconds,
   milliseconds,
