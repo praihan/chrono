@@ -202,6 +202,9 @@ export namespace Duration {
   export function abs<T extends number>(duration: Duration<T>): Duration<T> {
     return new DurationObject(duration.unit, Math.abs(duration.count));
   }
+  export function since(date: Date): Milliseconds {
+    return milliseconds(Date.now() - date.getTime());
+  }
 
   // #endregion
 
