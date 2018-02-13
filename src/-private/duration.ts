@@ -31,6 +31,20 @@ export type AtMostSeconds = Seconds | AtMostMilliseconds;
 export type AtMostMinutes = Minutes | AtMostSeconds;
 export type AtMostHours = Hours | AtMostMinutes;
 
+export class DurationObject<T extends number> implements Duration<T> {
+  public readonly unit: T;
+  public readonly count: number;
+
+  constructor(unit: T, count: number) {
+    this.unit = unit;
+    if (!Number.isSafeInteger(count)) throw RangeError();
+    this.count = count;
+  }
+
+  valueOf(): number { return Duration.valueOf(this); }
+  toString(): string { return Duration.toString(this); }
+}
+
 // #endregion
 
 
@@ -252,20 +266,6 @@ export namespace Duration {
 
 
 // #region privates
-
-export class DurationObject<T extends number> implements Duration<T> {
-  public readonly unit: T;
-  public readonly count: number;
-
-  constructor(unit: T, count: number) {
-    this.unit = unit;
-    if (!Number.isSafeInteger(count)) throw RangeError();
-    this.count = count;
-  }
-
-  valueOf() { return Duration.valueOf(this); }
-  toString() { return Duration.toString(this); }
-}
 
 function createDurationObjectFromArg<T extends number, U extends number>(unit: T, arg: number | Duration<U>): Duration<T> {
   let count: number;
