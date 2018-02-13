@@ -19,7 +19,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint --format codeFrame --project . 'src/**/*.ts' 'test/**/*.ts'",
+    "lint": "tslint --format codeFrame --project . \"src/**/*.ts\" \"test/**/*.ts\"",
     "prebuild": "rimraf dist",
     "docs": "typedoc --excludePrivate --excludeExternals --out dist/docs --target es6 --theme minimal --mode file src",
     "build": "tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && npm run docs",
